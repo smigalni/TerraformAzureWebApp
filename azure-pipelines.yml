@@ -1,0 +1,14 @@
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
+  displayName: 'Use Terraform 0.12.6'
+  inputs:
+    terraformVersion: 0.12.6
+
+- script: 'terraform init'
+  displayName: 'Terraform init'
+
+- script: 'terraform apply -var resourceGroupName=$(resourceGroupName) -var location=$(location) -var subscriptionId=$(subscriptionId) -var tenantId=$(tenantId) -var clientId=$(clientId) -var clientSecret=$(clientSecret) -var appServiceName=$(appServiceName) -var appServicePlanName=$(appServicePlanName) -auto-approve '
+  displayName: 'Terrafom apply'
